@@ -1,3 +1,0 @@
-username: hackrutgers
-email: ljfrotton@gmail.com
-password: hackru123
