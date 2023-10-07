@@ -1,3 +1,3 @@
-LukeHacru
-ljfrotton@gmail.com
-hackru123
+username: hackrutgers
+email: ljfrotton@gmail.com
+password: hackru123
