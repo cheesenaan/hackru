@@ -1,5 +1,5 @@
 const openai = require('./config/openaiConfig'); 
-const { context1, context2, context3, context4, context5 } = require('./context'); 
+const { context1, context2, context3, context4, context5, context6 } = require('./context'); 
 
 function isJSONString(str) {
     try {
@@ -91,7 +91,7 @@ async function newprompt(data){
     const prompt1 = "you are going to get timline data of a person in json format like this {{'title' 'description'}, {'title' : 'description'}, {'title' : 'descrition}}";
     const prompt2 = "you will be given major life events in the form of this json"; 
     const cont = "here are some examples of what to do"; 
-    const context = `${context4} \n ${context5}`; 
+    const context = `${context6}`; 
 
     const prompt3 = "here comes the data"; 
 
@@ -120,7 +120,7 @@ async function newprompt(data){
 }
 
 (async () => {
-    const result = await open("{'basic informtion': 'my name is john and I am 12'}, {'interests: 'running, swimming and skating'}");
+    const result = await newprompt("{}");
     console.log(result);
 })();
 
