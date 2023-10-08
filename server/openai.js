@@ -10,7 +10,7 @@ function isJSONString(str) {
     }
 }
 
-async function timeline(change, timline){
+async function changeTimeline(timline, change){
     const prompt1 = "You are going to get timline data of a person's life in a json format like this {{'title': 'text', 'description': 'text'}, {'title': 'text', 'description': 'text'}, {'title': 'text', 'description': 'text'}}"; 
     const prompt2 = "You will be given a information on what has changed and you should generate a new timline in the same format accordingly. The list of timeline nodes must be a minimum of 245 total tokens."; 
     const cont = "here is an example of what you should output based on input. they are shown as json documents"
@@ -46,19 +46,20 @@ async function timeline(change, timline){
 }
 
 
-async function newprompt(data){
-    const prompt1 = "Please output in json format like this {'title': 'text', 'description': 'text'} the description must be less than or equal to 44 tokens and the title must be less than or equal to 8 tokens. The list of nodes must be a minimum of 245 total tokens."; 
-    const prompt2 = "Based on the follow data, predict the future of this persons life. Remeber the json formatting specified. Also age does not indicate the length of your output. Be definite in your responses."
-    const cont = "here are some examples of what to output based on an input"; 
+async function createTimeline(data){
+    const prompt = "You are going to be given a series of information about a persons life. The topics of information will be `education`, `employment`, `socialLife`, `loveLife`, and `wishYouNeverDid`. \
+    Using this information, you are going to want to generate a timeline of events of that person's life. It will be specified this this format: `{'title': 'text', 'description': 'text'}`. The `title` is the name \
+    of the event, and the description is a description of what occurred in that event that is meaningful. Each description in each event must be more than 20 words. I repeat, EACH DESCRIPTION MUST BE MORE THAN 20 WORDS. In addition, the title of the event \
+    must be named exactly based on what happened. Your title cannot be called: `education`, `employment`, `socialLife`, `loveLife`, and `wishYouNeverDid`\
+    . Your output must be completely valid json and must, MUST MUST be same format as this example: "
+    
     const context = `${context6}`; 
-
-    const prompt3 = "here comes the data"; 
 
     async function getResponse(){
         let isValid = false; 
         while(!isValid){
             const completion = await openai.chat.completions.create({
-                messages: [{role: 'system', content: `${prompt1} \n ${prompt2} \n ${cont} \n ${context} \n ${prompt3} \n ${data}`}],
+                messages: [{role: 'system', content: `${prompt} \n ${context}`}],
                 model: "gpt-3.5-turbo",
                 max_tokens: 600,
 
@@ -67,6 +68,7 @@ async function newprompt(data){
             isValid = isJSONString(completion.choices[0].message.content);
 
             if(!isValid) {
+                console.log("invalid json")
                 continue
             }
 
@@ -78,12 +80,8 @@ async function newprompt(data){
     return(await getResponse()); 
 }
 
-(async () => {
-    const result = await newprompt("{}");
-    console.log(result);
-})();
 
 module.exports = {
-    timeline,
-    newprompt
+    changeTimeline,
+    createTimeline
 }

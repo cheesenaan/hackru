@@ -28,6 +28,8 @@ router.post('/login', async (req, res) => {
         await client.hSet('user_info', req.body.email, JSON.stringify(userInfo))
         await client.hSet('user_id', userInfo.currentlyUsedUserId, req.body.email)
 
+        console.log("success")
+
         res.status(200).json({userId: userInfo.currentlyUsedUserId}).send();
     } catch(err) {
         console.log(err)

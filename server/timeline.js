@@ -56,7 +56,7 @@ router.post('/submitFormData', validateUserId, async (req, res) => {
             wishYouDid: req.body.wishYouDid,
         };
 
-        const result = await openai.newprompt(JSON.stringify(form))
+        const result = await openai.createTimeline(JSON.stringify(form))
 
         await client.hSet('user_timeline', req.body.email, result)
         
@@ -92,7 +92,7 @@ router.post('/changeTimeline', validateUserId, async (req, res) => {
             alternateChoice: req.body.alternateChoice,
         };
 
-        const result = await openai.timeline(req.body, JSON.stringify(changeInfo))
+        const result = await openai.timeline(timeline, JSON.stringify(changeInfo))
 
         res.status(200).send(result.message.content);
     } catch(err) {
