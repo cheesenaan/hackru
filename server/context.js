@@ -1,9 +1,26 @@
-const context1 = " input : {{'basic information' : 'My name is john and I am 22 years old'}, {'education' : 'I am currently completing my masters degree in  data science'}, {'how do you spend your time' : 'I enjoy playin frisbee golf'}} output: {{'educate' : 'you complete your masters degree'}, {'before you get you first job you break you leg playing frisbee golf'}, {'recover' : 'you recover hastly from you injury'}, {'golf' : 'you stop playin frisbee golf and focus on your career'}, {'return' : 'you return to school and get your doctorate'}}"; 
-const context2 = "input : {{'basic information' : 'My name is jose and I am a 45 year old carpenter'}, {'education' : 'I completed high school, but I have a passion for reading'}, {'how is your time spent' : ''}, {}}"; 
-const context3 = "input : {{'basic information : 'My name is Benny and I am a 84 year old retired indivduals'}, {'education' : 'I graduated college with a bachelors in economics'}, {'what is your greatest success' : 'My five children'}} output: { {'In the sunset' : 'You move to Nevada to retire'}, {'relationship' : 'you maintain a strong relationship with your children'} , {'passing' : 'you pass away peacfully in your bed'} }";  
-const context4 = "input : {{'about me' : 'My name is Ronald I am a 17 year old high school student'}, {'life events' : 'I broke my arm in third grade. I made the freshaman baseball team. I aced algebra. I had my first kiss as a sophmore'}} output: {{'begining of life' : 'you where born and had a traditonal childhood'}, {'childhood' : 'you later broke your arm}, {'high school stunts' : 'you made the freshaman football team. then aced alebgra. Then you had your fist kiss as a sophmore'}}"; 
-const context5 = "input : {{'about me' : 'My name is Lisa and I am a 55 year old hedge fund manager'}, {'life events' : 'I played softball as a elementary school student. I had my first boyfriend in 7th grade. I met my future husbund in 11th grade. I went to NYU and graduated with a degree in finace. I then got my MBA at NYU. I married my husbund. I went from job to job when I found where I work curretnly'}} output : {{'childhood' : 'I was born. then I went to elementary school were I started playing softball. I began dating my first boyfriend in 7th grade'}, {'high school fun' : 'I met my future husbund in 11th grade'}, {'college fun : I graduated with a degree in finace from NYU. I got my MBA on NYU.'}, {'adult life' : 'I married my husbund. I then went from job to job. I then made it to my curretnly company where I work today'}}"
-const context6 = `input : {
+const context1 = `input: 
+{
+    {
+        {"title" : "winning karater tornament", "description" : "I went to ABC elementary school and won the karate tornament", "alternateChoices" : "["I assaulted my teacher getting kicked out of school", "I did not attend the karater tornument"]"}, 
+        {"title" : "punched bob in the face", "description" : "I attended ZYZ high school, but I punched bob in the face. He was severly injured leading to jail time", "alternateChoice" : "["I did not punch bob in the face", "I punched joe in the face"]"}, 
+        {"title" : "in jail", "description" : "In jail I was extremly well behaved. I stayed out of a fight", }
+    },
+
+    {
+        "title" : "punching bob", "alternateChoice" : "I wish I had not punched bob in the face" 
+    }
+}
+
+output : 
+
+{}
+
+`; 
+
+
+
+const context6 = `input : 
+{
     "education": "I attended XYZ School for my primary education. One notable event during that time was winning the science fair in fifth grade. For my higher education, I went to ABC University, where I majored in Computer Science.",
     "employment": "I am currently working as a software developer at XYZ Company. I enjoy my job, but I wish I had more opportunities for professional growth. In the past, I worked at DEF Corporation as a junior developer, where I gained valuable experience.",
     "socialLife": "My social life is quite active. I have a close-knit group of friends, and we often organize get-togethers and outings. One notable event was a recent trip to the mountains with my friends.",
@@ -16,11 +33,15 @@ const context6 = `input : {
 
 
   output : 
+  
   {
-    "early life" : "you where born and attend XYZ school where you procastinated on a project, I was raised agnostic", 
-    "teenage years" : "I had a couple relationships at in high school. I was quite social" , 
-    "getting to know myself" : "I began to develop hobbies such as reading, hiking and playing 
+    {"title" : "Won science fair", "description": "I began with eduaction at XYZ school where I wohn the science fair. I was also raised agnostic"},
+    {"title : "Teenager", "description": "I was quite social but started to develop a closley knit friend group. I dated a bit and went on a trip with my friends. I regret missing an imporant project"},
+    {"title" : "Never went on a trip", "description": "I started to enjoy reading, hiking and guitar playing. I started college, but regret not taking a gap year."},
+    {"title" : "Young adult", "description": "I began a job at DEF corp as a juinor dev after majoring in computer science at ABC university."},
+    {"title" : "Adulthood", "description": "I progressed to a job at XYZ company as a software developer. I am in a happy relaionship but wish more oppurtunites for growth"},
   }
+
   
   `
 module.exports = context1, context2, context3, context4, context5, context6;  
