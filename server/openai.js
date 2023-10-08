@@ -12,7 +12,6 @@ function isJSONString(str) {
 
 
 
-
 export default function open(data){
 
 
@@ -36,7 +35,7 @@ export default function open(data){
 
                 temperature: .2,
             });
-            
+
             isValidJSON = isJSONString(response.data.choices[0].text);
 
             if (!isValidJSON) {
