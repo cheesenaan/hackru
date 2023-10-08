@@ -16,7 +16,7 @@ export default function Report() {
 			],
 		},
 		{
-			title: "Slacking in HS",
+			title: "Passive in High School",
 			description:
 				"bla bla about what happened to the user when you emigrated",
 			alternateChoices: [
@@ -32,26 +32,6 @@ export default function Report() {
 				"instead of studying computer science at rutgers, you study film and photography. you slowly raise as an upcoming photograph and you almost win National Geographic  photography contest for 20 under 20",
 				"you study medicine and have a slightly stressful, extremely disciplined lifestyle at NYU. you have fun from time to times by going out with friends in the city",
 			],
-		},
-		{
-			title: "Moo",
-			description: "what happened",
-			alternateChoices: ["no choices"],
-		},
-		{
-			title: "Moo",
-			description: "what happened",
-			alternateChoices: ["no choices"],
-		},
-		{
-			title: "Moo",
-			description: "what happened",
-			alternateChoices: ["no choices"],
-		},
-		{
-			title: "Moo",
-			description: "what happened",
-			alternateChoices: ["no choices"],
 		},
 	];
 	const [activeNode, setActiveNode] = useState(-1);
@@ -101,7 +81,11 @@ export default function Report() {
 										activeNode === i
 											? "text-green-300"
 											: "text-stone-300"
-									} text-lg relative ${i !== 0 ? "before:content-['_>_'] before:text-stone-500" : ""}`}
+									} text-lg relative ${
+										i !== 0
+											? "before:content-['_>_'] before:text-stone-500"
+											: ""
+									}`}
 									onClick={() => handleNodeClick(i)}
 								>
 									{title}
@@ -136,7 +120,7 @@ export default function Report() {
 
 						{activeNode !== -1 && (
 							<button
-								className="bg-fuchsia-700 text-cyan-50 p-4 py-1 font-semibold"
+								className="bg-fuchsia-700 text-cyan-50 p-4 py-1 font-semibold mt-10"
 								onClick={handleCustomNodeAdd}
 							>
 								{customNodeChange[activeNode] !== undefined &&

@@ -3,16 +3,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import TextareaAutosize from "react-textarea-autosize";
 import NavBar from "@/components/navbar";
+import axios from "axios";
+
 export default function Form() {
 	const questions = [
-		"Tell me about your education, including the schools you went to, and the important/notable events that have occurred there.",
-		"Tell me about your employment situation. How do you feel about it? What about your past employment? What do you wish you did?",
-		"What is your social life looking like? What are some notable events?",
-		"What is your love life looking like? What are some your past loves? What went wrong, what did you wish would happen?",
-		"What do you do in your free time? What do you enjoy?",
-		"What is your religion and beliefs. Is there any outstanding beliefs you have you wish to share? Is these anything these beliefs have caused?",
+		"Please share some details about your educational background, such as the schools you attended and any significant or noteworthy events that took place during your time there?",
+		"How is your current employment situation and how you feel about it? Additionally, I'd like to hear about your past employment experiences and if there's anything you wish you had done differently.",
+		"How is your social life? What are some recent notable events?",
+		"How is your love life? What are some recent notable events?",
 		"What do you wish you never did?",
-		"What do you wish you had done?",
 	];
 
 	const [answers, setAnswers] = useState(questions.map((q) => ""));
@@ -39,9 +38,23 @@ export default function Form() {
 		});
 	};
 
-	const handleFormSubmission = () => {
-		
-	}
+	const handleFormSubmission = async () => {
+		const { data } = await axios.post(
+			"https://1713-128-6-37-148.ngrok-free.app",
+			{
+				education: answers[0],
+				employment: answers[1],
+				socialLife: answers[2],
+				loveLife: answers[3],
+				wishYouNeverDid: answers[4],
+			},
+			{
+				headers: {
+					"User-Id": "multipart/form-data",
+				},
+			}
+		);
+	};
 	return (
 		<>
 			<NavBar isdark="false" />
@@ -65,12 +78,14 @@ export default function Form() {
 								? "Submit"
 								: "Next ->"}
 						</button>
-						<button
-							className="text-fuchsia-700"
-							onClick={decreaseCursor}
-						>
-							&lt;----
-						</button>
+						{questionCursor !== 0 && (
+							<button
+								className="text-fuchsia-700"
+								onClick={decreaseCursor}
+							>
+								&lt;----
+							</button>
+						)}
 					</div>
 				</dir>
 			</div>
