@@ -15,8 +15,8 @@ async function open(data){
     const cont = "here are some examples for you"; 
     const context = `${context1} \n ${context2} \n ${context3}`; 
     
-    const upperprompt = "Please output in json format like this {'title': 'description', 'title': 'description'} the description must be less than or equal to 44 tokens and the title must be less than or equal to 8 tokens you can add as many steps as you want. minium of 245 total tokens"; 
-    const midprompt = "Based on the follow data on want you to predict the future of this persons life use should predict in steps. Remeber the formatting. also age does not indicate the length of your output. Also be definite in your responses"
+    const upperprompt = "Please output in json format like this {'title': 'text', 'description': 'text'} the description must be less than or equal to 44 tokens and the title must be less than or equal to 8 tokens. The list of nodes must be a minimum of 245 total tokens."; 
+    const midprompt = "Based on the follow data, predict the future of this persons life. Remeber the json formatting specified. Also age does not indicate the length of your output. Be definite in your responses."
 
     const superprompt = "here is the data"
 
@@ -54,8 +54,8 @@ async function open(data){
 }
 
 async function timeline(change, timline){
-    const prompt1 = "you are going to get timline data of a person in json format like this {{'title' 'description'}, {'title' : 'description'}, {'title' : 'descrition}}"; 
-    const prompt2 = "You will be given a information on what has changed and you should generate a new timline in the same format accordingly"; 
+    const prompt1 = "You are going to get timline data of a person's life in a json format like this {{'title': 'text', 'description': 'text'}, {'title': 'text', 'description': 'text'}, {'title': 'text', 'description': 'text'}}"; 
+    const prompt2 = "You will be given a information on what has changed and you should generate a new timline in the same format accordingly. The list of timeline nodes must be a minimum of 245 total tokens."; 
     const prompt3 = "this is the change: "; 
     const prompt4 = "here is the timeline"; 
     
@@ -88,8 +88,8 @@ async function timeline(change, timline){
 
 
 async function newprompt(data){
-    const prompt1 = "you are going to get timline data of a person in json format like this {{'title' 'description'}, {'title' : 'description'}, {'title' : 'descrition}}";
-    const prompt2 = "you will be given major life events in the form of this json"; 
+    const prompt1 = "Please output in json format like this {'title': 'text', 'description': 'text'} the description must be less than or equal to 44 tokens and the title must be less than or equal to 8 tokens. The list of nodes must be a minimum of 245 total tokens."; 
+    const prompt2 = "Based on the follow data, predict the future of this persons life. Remeber the json formatting specified. Also age does not indicate the length of your output. Be definite in your responses."
     const cont = "here are some examples of what to do"; 
     const context = `${context6}`; 
 
