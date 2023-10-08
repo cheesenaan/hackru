@@ -92,7 +92,7 @@ export async function newprompt(data){
     const prompt1 = "you are going to get timline data of a person in json format like this {{'title' 'description'}, {'title' : 'description'}, {'title' : 'descrition}}";
     const prompt2 = "you will be given major life events in the form of this json"; 
     const cont = "here are some examples of what to do"; 
-    const context = `${context4}`; 
+    const context = `${context4} \n ${context5}`; 
 
     const prompt3 = "here comes the data"; 
 
