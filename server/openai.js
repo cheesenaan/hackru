@@ -47,11 +47,11 @@ async function changeTimeline(timline, change){
 
 
 async function createTimeline(data){
-    const prompt = "You are going to be given a serious of information about a persons life. The topics of information will be `education`, `employment`, `socialLife`, `loveLife`, and `wishYouNeverDid`. \
-    Using this information, you are going to want to generate a timeline of events of that person's life. It will be specified this this format: `{'title': 'text', 'description': 'text'}`. The `title` is the name\
-    of the event, and the description is a brief description of what occurred in that event that is meaningful. This description must be at least 20 words long, each. In addition, the title in the output must be named exactly based on what happened, it cannot be named `education`, `employment`, `socialLife`, `loveLife`, and `wishYouNeverDid`\
-    . Your output must be completely valid json in the format I previously specified. Must be valid json, \
-    and only json outputted. Here is some example input and output:"
+    const prompt = "You are going to be given a series of information about a persons life. The topics of information will be `education`, `employment`, `socialLife`, `loveLife`, and `wishYouNeverDid`. \
+    Using this information, you are going to want to generate a timeline of events of that person's life. It will be specified this this format: `{'title': 'text', 'description': 'text'}`. The `title` is the name \
+    of the event, and the description is a description of what occurred in that event that is meaningful. Each description in each event must be more than 20 words. I repeat, EACH DESCRIPTION MUST BE MORE THAN 20 WORDS. In addition, the title of the event \
+    must be named exactly based on what happened. Your title cannot be called: `education`, `employment`, `socialLife`, `loveLife`, and `wishYouNeverDid`\
+    . Your output must be completely valid json and must, MUST MUST be same format as this example: "
     
     const context = `${context6}`; 
 
@@ -80,10 +80,6 @@ async function createTimeline(data){
     return(await getResponse()); 
 }
 
-(async () => {
-    const result = await createTimeline("{}");
-    console.log(result);
-})();
 
 module.exports = {
     changeTimeline,
