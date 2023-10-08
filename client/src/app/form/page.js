@@ -39,21 +39,22 @@ export default function Form() {
 	};
 
 	const handleFormSubmission = async () => {
-		const { data } = await axios.post(
-			"https://1713-128-6-37-148.ngrok-free.app",
-			{
-				education: answers[0],
-				employment: answers[1],
-				socialLife: answers[2],
-				loveLife: answers[3],
-				wishYouNeverDid: answers[4],
-			},
-			{
-				headers: {
-					"User-Id": "multipart/form-data",
-				},
-			}
-		);
+		// const { data } = await axios.post(
+		// 	"https://1713-128-6-37-148.ngrok-free.app",
+		// 	{
+		// 		education: answers[0],
+		// 		employment: answers[1],
+		// 		socialLife: answers[2],
+		// 		loveLife: answers[3],
+		// 		wishYouNeverDid: answers[4],
+		// 	},
+		// 	{
+		// 		headers: {
+		// 			"User-Id": localStorage.getItem("userId"),
+		// 		},
+		// 	}
+		// );
+		router.push("/report")
 	};
 	return (
 		<>

@@ -3,13 +3,13 @@ import NavBar from "@/components/navbar";
 import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import {useRouter} from 'next/navigation'
 
 export default function Auth() {
 	const [email, setEmail] = useState("");
 	const [fullName, setFullName] = useState("");
 	const [password, setPassword] = useState("");
-	// const router = useRouter();
+	const router = useRouter();
 	
 	const handleFormSubmission = async () => {
 		const { data } = await axios.post("https://1713-128-6-37-148.ngrok-free.app/register", {
@@ -17,7 +17,7 @@ export default function Auth() {
 			fullName: fullName,
 			password: password,
 		});
-		// router.push("/auth/login")
+		router.push("/auth/login")
 	};
 	return (
 		<>

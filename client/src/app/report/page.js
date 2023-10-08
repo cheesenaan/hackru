@@ -16,7 +16,7 @@ export default function Report() {
 			],
 		},
 		{
-			title: "Passive in High School",
+			title: "High School",
 			description:
 				"bla bla about what happened to the user when you emigrated",
 			alternateChoices: [
