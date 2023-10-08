@@ -58,8 +58,6 @@ router.post('/submitFormData', validateUserId, async (req, res) => {
 
         const result = await openai.newprompt(JSON.stringify(form))
 
-        console.log("ress: " + result.message.content)
-
         await client.hSet('user_timeline', req.body.email, result)
         
         res.status(200).send();
