@@ -65,4 +65,4 @@ router.post('/register', async (req, res) => {
     }
 });
 
-module.exports = [router, validateUserId];
+module.exports = router;
