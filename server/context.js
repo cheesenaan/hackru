@@ -46,4 +46,4 @@ const context6 = `input :
 
   
   `
-module.exports = context1, context2, context3, context4, context5, context6;  
+module.exports = context1, context6;  
