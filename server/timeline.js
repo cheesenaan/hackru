@@ -92,9 +92,10 @@ router.post('/changeTimeline', validateUserId, async (req, res) => {
             alternateChoice: req.body.alternateChoice,
         };
 
-        const result = await openai.timeline(timeline, JSON.stringify(changeInfo))
+        const result = await openai.changeTimeline(timeline, JSON.stringify(changeInfo))
 
-        res.status(200).send(result.message.content);
+
+        res.status(200).send(result);
     } catch(err) {
         console.log(err)
         res.status(400).send();
