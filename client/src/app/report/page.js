@@ -38,6 +38,21 @@ export default function Report() {
 			description: "what happened",
 			alternateChoices: ["no choices"],
 		},
+		{
+			title: "Moo",
+			description: "what happened",
+			alternateChoices: ["no choices"],
+		},
+		{
+			title: "Moo",
+			description: "what happened",
+			alternateChoices: ["no choices"],
+		},
+		{
+			title: "Moo",
+			description: "what happened",
+			alternateChoices: ["no choices"],
+		},
 	];
 	const [activeNode, setActiveNode] = useState(-1);
 	const [customNodeChange, setCustomNodeChange] = useState(
@@ -71,21 +86,22 @@ export default function Report() {
 			<div className="bg-stone-800 h-screen  p-24 w-full flex flex-col items-center">
 				<div className="max-w-4xl">
 					<h1 className="text-cyan-50 text-xl text-center">
-						Your Life through its road forks
+						Explore your self in alternative realties
 					</h1>
 					<h2 className="text-stone-400 text-lg text-center">
-						feel free to choose alternative decisions
+						Backtrack through your decisions and figure out the what
+						if...
 					</h2>
 
-					<div className="flex justify-center items-center mt-20">
+					<div className="flex justify-center items-center mt-20 flex-wrap">
 						{nodes.map(({ title, description }, i) => (
-							<div key={i} className="flex items-center">
+							<div key={i} className="flex items-center mb-10">
 								<button
 									className={`${
 										activeNode === i
-											? "text-white before:content-['change_path'] before:uppercase before:whitespace-pre before:absolute before:bottom-8 before:text-green-500 before:text-xs -tracking-tighter"
+											? "text-green-300"
 											: "text-stone-300"
-									} text-lg relative `}
+									} text-lg relative ${i !== 0 ? "before:content-['_>_'] before:text-stone-500" : ""}`}
 									onClick={() => handleNodeClick(i)}
 								>
 									{title}
@@ -125,7 +141,7 @@ export default function Report() {
 							>
 								{customNodeChange[activeNode] !== undefined &&
 								customNodeChange[activeNode] !== ""
-									? "Explore"
+									? "Submit & Explore"
 									: "Custom decision + "}
 							</button>
 						)}

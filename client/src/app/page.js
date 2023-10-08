@@ -9,8 +9,7 @@ export default function Home() {
 			<main className="flex min-h-screen flex-col items-center justify-between p-24">
 				<dir>
 					<h1 className="text-4xl max-w-3xl text-center font-light">
-						Walk back to your life&#39;s change points and ponder
-						alternative selfs
+						Ponder your alternative selfs by revisiting your life&#39;s crossroads
 					</h1>
 					<h2 className="text-center text-xl font-light mt-6">
 						<span className="after:inline-block after:h-3 after:w-20  after:bg-gradient-to-r after:from-fuchsia-700 after:to-transparent">
