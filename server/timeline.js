@@ -2,7 +2,7 @@ const express = require('express');
 const crypto = require('crypto');
 const redis = require('redis')
 
-// const openai = require('./openai')
+const openai = require('./openai')
 
 const router = express.Router();
 const client = redis.createClient()
@@ -56,7 +56,7 @@ router.post('/submitFormData', validateUserId, async (req, res) => {
             wishYouDid: req.body.wishYouDid,
         };
 
-        const result = openai.open(req.body)
+        const result = openai.open(JSON.stringify(form))
 
         await client.hSet('user_timeline', req.body.email, result)
         
@@ -92,7 +92,7 @@ router.post('/changeTimeline', validateUserId, async (req, res) => {
             alternateChoice: req.body.alternateChoice,
         };
 
-        const result = openai.timeline(req.body, changeInfo)
+        const result = openai.timeline(req.body, JSON.stringify(changeInfo))
 
         res.status(200).send(result);
     } catch(err) {
