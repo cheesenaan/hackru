@@ -23,11 +23,12 @@ router.post('/login', async (req, res) => {
             return
         }
 
-        const userId = uuidv4()
+        userInfo.currentlyUsedUserId = uuidv4()
 
-        await client.hSet('user_id', req.body.email, userId)
+        await client.hSet('user_info', req.body.email, JSON.stringify(userInfo))
+        await client.hSet('user_id', userInfo.currentlyUsedUserId, req.body.email)
 
-        res.status(200).json({userId: userId}).send();
+        res.status(200).json({userId: userInfo.currentlyUsedUserId}).send();
     } catch(err) {
         console.log(err)
         res.status(400).send();
@@ -45,7 +46,8 @@ router.post('/register', async (req, res) => {
         const userInfo = {
             email: req.body.email,
             fullName: req.body.fullName,
-            password: hashedData
+            password: hashedData,
+            currentlyUsedUserId: null
         };
         
         const userExists = await client.hGet('user_info', req.body.email)

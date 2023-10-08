@@ -2,38 +2,64 @@ const express = require('express');
 const crypto = require('crypto');
 const redis = require('redis')
 
+// const openai = require('./openai')
+
+const router = express.Router();
 const client = redis.createClient()
 client.connect()
 
-const validateUserId = (req, res, next) => {
-    const userId = req.headers["user-id"];
+const validateUserId = async (req, res, next) => {
+    const userId = req.get("User-Id");
 
-    if (userId == null || !isValidUserId(userId)) {
-        return res.status(400).json({ error: 'Invalid user ID' });
+    if (userId != null) {
+        const isReal = await !isValidUserId(userId)
+
+        if(isReal) {
+            return res.status(400).json({ error: 'Invalid user ID' });
+        }
     }
 
-    req.userId = userId;
+    req.email = await client.hGet('user_id', userId);
 
     next();
 };
 
-const isValidUserId = (userId) => {
+const isValidUserId = async (userId) => {
     try {
-        const realUserId = client.hGet('user_id', userId);
-        
-        return realUserId != null && realUserId == userId
-      } catch (err) {
+        const email = await client.hGet('user_id', userId);
 
+        if(email != null) {
+            const userInfo = JSON.parse(await client.hGet('user_info', email))
+            console.log("comparing " + userId + " and " + userInfo.currentlyUsedUserId)
+
+            return userInfo.currentlyUsedUserId != null && userInfo.currentlyUsedUserId == userId
+        }
+
+      } catch (err) {
         console.error(err);
-        return false
       }
+
+      return false
 };
 
-// 401, wrong password
 // 400, general error
 router.post('/submitFormData', validateUserId, async (req, res) => {
     try {
+        const form = {
+            education: req.body.education,
+            employment: req.body.employment,
+            socialLife: req.body.socialLife,
+            loveLife: req.body.loveLife,
+            freeLife: req.body.freeLife,
+            religionAndBeliefs: req.body.religionAndBeliefs,
+            wishYouNeverDid: req.body.wishYouNeverDid,
+            wishYouDid: req.body.wishYouDid,
+        };
 
+        const result = openai.open(req.body)
+
+        await client.hSet('user_timeline', req.body.email, result)
+        
         res.status(200).send();
     } catch(err) {
         console.log(err)
@@ -41,35 +67,40 @@ router.post('/submitFormData', validateUserId, async (req, res) => {
     }
 });
 
-// 409, email already exists
-// 400, bad request
-router.post('/register', async (req, res) => {
-    try {        
-        const hash = crypto.createHash('sha256');
-        hash.update(req.body.password);
-        const hashedData = hash.digest('hex');
+// 400, general error
+router.get('/getTimeline', validateUserId, async (req, res) => {
+    try {
+        res.status(200).send(await client.hGet('user_timeline', req.body.email));
+    } catch(err) {
+        console.log(err)
+        res.status(400).send();
+    }
+});
 
-        const userInfo = {
-            email: req.body.email,
-            fullName: req.body.fullName,
-            password: hashedData
-        };
-        
-        const userExists = await client.hGet('user_info', req.body.email)
-        console.log(userExists)
-
-        if(userExists != null) {
-            res.status(409).send()
+// 401, unauthorized (not enough info to do this)
+// 400, general error
+router.post('/changeTimeline', validateUserId, async (req, res) => {
+    try {
+        const timeline = await client.hGet('user_timeline', req.body.email)
+        if(timeline == null) {
+            res.status(401).send();
             return
         }
 
-        await client.hSet('user_info', req.body.email, JSON.stringify(userInfo))
+        const changeInfo = {
+            title: req.body.title,
+            alternateChoice: req.body.alternateChoice,
+        };
 
-        res.status(200).send();
+        const result = openai.timeline(req.body, changeInfo)
+
+        res.status(200).send(result);
     } catch(err) {
         console.log(err)
         res.status(400).send();
     }
 });
 
-module.exports = [router, validateUserId];
+
+
+module.exports = router;

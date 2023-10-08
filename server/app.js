@@ -5,7 +5,9 @@ const port = 3000
 app.use(express.json())
 
 const auth = require('./auth');
+const timeline = require('./timeline');
 app.use('/auth', auth);
+app.use('/', timeline);
 
 const redis = require('redis')
 const client = redis.createClient()

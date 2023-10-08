@@ -10,9 +10,7 @@ function isJSONString(str) {
     }
 }
 
-
 async function open(data){
-
     const recieveprompt = "below you will be reciving json data that contains information about a persons life. do what you must"; 
     const cont = "here are some examples for you"; 
     const context = `${context1} \n ${context2}`; 
@@ -94,4 +92,7 @@ async function timeline(change, timline){
     console.log(result);
 })();
 
-
+module.exports = {
+    open,
+    timeline
+}
