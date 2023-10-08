@@ -11,7 +11,7 @@ function isJSONString(str) {
 }
 
 
-async function open(data){
+export async function open(data){
 
     const recieveprompt = "below you will be reciving json data that contains information about a persons life. do what you must"; 
     const cont = "here are some examples for you"; 
@@ -57,7 +57,7 @@ async function open(data){
 
 }
 
-async function timeline(change, timline){
+export async function timeline(change, timline){
     const prompt1 = "you are going to get timline data of a person in json format like this {{'title' 'description'}, {'title' : 'description'}, {'title' : 'descrition}}"; 
     const prompt2 = "You will be given a information on what has changed and you should generate a new timline in the same format accordingly"; 
     const prompt3 = "this is the change: "; 
