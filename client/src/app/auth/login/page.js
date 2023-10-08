@@ -3,8 +3,10 @@ import NavBar from "@/components/navbar";
 import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import {useRouter} from 'next/navigation'
 
 export default function LogIn() {
+    const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -16,8 +18,9 @@ export default function LogIn() {
 				password: password,
 			}
 		);
-		localStorage.setItem("userID", data.userId);
+		localStorage.setItem("userId", data.userId);
 		console.log(data.userId);
+        router.push("/")
 	};
 	return (
 		<>
