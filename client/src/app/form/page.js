@@ -2,13 +2,17 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import TextareaAutosize from "react-textarea-autosize";
-import NavBar from "@/components/navbar"
-;
+import NavBar from "@/components/navbar";
 export default function Form() {
 	const questions = [
-		"Hello friend, Tell me about your education, the schools you went to, and the important/notable events that have occurred there.",
-		"Question 2 prompt",
-		"Question 3 prompt",
+		"Tell me about your education, including the schools you went to, and the important/notable events that have occurred there.",
+		"Tell me about your employment situation. How do you feel about it? What about your past employment? What do you wish you did?",
+		"What is your social life looking like? What are some notable events?",
+		"What is your love life looking like? What are some your past loves? What went wrong, what did you wish would happen?",
+		"What do you do in your free time? What do you enjoy?",
+		"What is your religion and beliefs. Is there any outstanding beliefs you have you wish to share? Is these anything these beliefs have caused?",
+		"What do you wish you never did?",
+		"What do you wish you had done?",
 	];
 
 	const [answers, setAnswers] = useState(questions.map((q) => ""));
@@ -18,12 +22,15 @@ export default function Form() {
 	const decreaseCursor = () => {
 		setQuestionCursor((old) => Math.max(0, --old));
 	};
+
 	const increaseCursor = () => {
 		if (questionCursor === questions.length - 1) {
-			router.push("report");
+			handleFormSubmission();
+			// router.push("report");
 		}
 		setQuestionCursor((old) => Math.min(questions.length - 1, ++old));
 	};
+
 	const handleTextAreaChange = (e) => {
 		setAnswers((old) => {
 			let newAnswers = [...old];
@@ -31,9 +38,13 @@ export default function Form() {
 			return newAnswers;
 		});
 	};
+
+	const handleFormSubmission = () => {
+		
+	}
 	return (
 		<>
-		<NavBar isdark="false" />
+			<NavBar isdark="false" />
 			<div className="flex items-center flex-col">
 				<dir className="flex flex-col items-start p-24 justify-between w-1/2">
 					<p className="font-light text-xl">
