@@ -13,7 +13,7 @@ function isJSONString(str) {
 export async function open(data){
     const recieveprompt = "below you will be reciving json data that contains information about a persons life. do what you must"; 
     const cont = "here are some examples for you"; 
-    const context = `${context1} \n ${context2}`; 
+    const context = `${context1} \n ${context2} \n ${context3}`; 
     
 
     const upperprompt = "Please output in json format like this {'title': 'description', 'title': 'description'} the description must be less than or equal to 44 tokens and the title must be less than or equal to 8 tokens you can add as many steps as you want. minium of 245 total tokens"; 
