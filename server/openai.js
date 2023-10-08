@@ -1,5 +1,5 @@
 const openai = require('./config/openaiConfig'); 
-const { context1, context2, context3 } = require('./context'); 
+const { context1, context2, context3, context4 } = require('./context'); 
 
 function isJSONString(str) {
     try {
@@ -13,7 +13,7 @@ function isJSONString(str) {
 export async function open(data){
     const recieveprompt = "below you will be reciving json data that contains information about a persons life. do what you must"; 
     const cont = "here are some examples for you"; 
-    const context = `${context1} \n ${context2}`; 
+    const context = `${context1} \n ${context2} \n ${context3}`; 
     
 
     const upperprompt = "Please output in json format like this {'title': 'description', 'title': 'description'} the description must be less than or equal to 44 tokens and the title must be less than or equal to 8 tokens you can add as many steps as you want. minium of 245 total tokens"; 
@@ -85,6 +85,39 @@ export async function timeline(change, timline){
     }
     return(getResponse()); 
 
+}
+
+
+export async function newprompt(data){
+    const prompt1 = "you are going to get timline data of a person in json format like this {{'title' 'description'}, {'title' : 'description'}, {'title' : 'descrition}}";
+    const prompt2 = "you will be given major life events in the form of this json"; 
+    const cont = "here are some examples of what to do"; 
+    const context = `${context4} \n ${context5}`; 
+
+    const prompt3 = "here comes the data"; 
+
+    async function getResponse(){
+        let isValid = false; 
+        while(!isValid){
+            const completion = await openai.chat.completions.create({
+                message: [{role: 'system'}, {content: `${prompt1} \n ${prompt2} \n ${cont} \n ${context} \n ${prompt3} \n ${data}`}],
+                model: "gpt-3.5-turbo",
+                max_tokens: 600,
+
+                temperature: .1,
+            }) 
+            isValid = isJSONString(completion.choices[0].message.content);
+            console.log(isValid)
+            //isValid=true
+
+            if (!isValid) {
+                console.log("Response is not valid JSON, retrying...");
+            }
+            //console.log(completion.choices[0]);
+            return(completion.choices[0]); 
+        }
+    }
+    return(getResponse()); 
 }
 
 (async () => {
