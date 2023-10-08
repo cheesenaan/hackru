@@ -1,5 +1,5 @@
 const openai = require('./config/openaiConfig'); 
-const { context1, context2, context3 } = require('./context'); 
+const { context1, context2, context3, context4 } = require('./context'); 
 
 function isJSONString(str) {
     try {
@@ -85,6 +85,39 @@ export async function timeline(change, timline){
     }
     return(getResponse()); 
 
+}
+
+
+export async function newprompt(data){
+    const prompt1 = "you are going to get timline data of a person in json format like this {{'title' 'description'}, {'title' : 'description'}, {'title' : 'descrition}}";
+    const prompt2 = "you will be given major life events in the form of this json"; 
+    const cont = "here are some examples of what to do"; 
+    const context = `${context4}`; 
+
+    const prompt3 = "here comes the data"; 
+
+    async function getResponse(){
+        let isValid = false; 
+        while(!isValid){
+            const completion = await openai.chat.completions.create({
+                message: [{role: 'system'}, {content: `${prompt1} \n ${prompt2} \n ${cont} \n ${context} \n ${prompt3} \n ${data}`}],
+                model: "gpt-3.5-turbo",
+                max_tokens: 600,
+
+                temperature: .1,
+            }) 
+            isValid = isJSONString(completion.choices[0].message.content);
+            console.log(isValid)
+            //isValid=true
+
+            if (!isValid) {
+                console.log("Response is not valid JSON, retrying...");
+            }
+            //console.log(completion.choices[0]);
+            return(completion.choices[0]); 
+        }
+    }
+    return(getResponse()); 
 }
 
 (async () => {
