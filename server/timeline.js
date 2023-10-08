@@ -2,32 +2,39 @@ const express = require('express');
 const crypto = require('crypto');
 const redis = require('redis')
 
-const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
 const client = redis.createClient()
-
 client.connect()
+
+const validateUserId = (req, res, next) => {
+    const userId = req.headers["user-id"];
+
+    if (userId == null || !isValidUserId(userId)) {
+        return res.status(400).json({ error: 'Invalid user ID' });
+    }
+
+    req.userId = userId;
+
+    next();
+};
+
+const isValidUserId = (userId) => {
+    try {
+        const realUserId = client.hGet('user_id', userId);
+        
+        return realUserId != null && realUserId == userId
+      } catch (err) {
+
+        console.error(err);
+        return false
+      }
+};
 
 // 401, wrong password
 // 400, general error
-router.post('/login', async (req, res) => {
+router.post('/submitFormData', validateUserId, async (req, res) => {
     try {
-        const userInfo = JSON.parse(await client.hGet('user_info', req.body.email))
 
-        const hash = crypto.createHash('sha256');
-        hash.update(req.body.password);
-        const hashPassword = hash.digest('hex');
-
-        if(userInfo.password != hashPassword) {
-            res.status(401).send()
-            return
-        }
-
-        const userId = uuidv4()
-
-        await client.hSet('user_id', req.body.email, userId)
-
-        res.status(200).json({userId: userId}).send();
+        res.status(200).send();
     } catch(err) {
         console.log(err)
         res.status(400).send();
