@@ -6,7 +6,7 @@ app.use(express.json())
 
 const auth = require('./auth');
 const timeline = require('./timeline');
-app.use('/auth', auth);
+app.use('/', auth);
 app.use('/', timeline);
 
 const redis = require('redis')

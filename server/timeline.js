@@ -56,7 +56,9 @@ router.post('/submitFormData', validateUserId, async (req, res) => {
             wishYouDid: req.body.wishYouDid,
         };
 
-        const result = openai.open(JSON.stringify(form))
+        const result = await openai.newprompt(JSON.stringify(form))
+
+        console.log("ress: " + result.message.content)
 
         await client.hSet('user_timeline', req.body.email, result)
         
@@ -68,7 +70,7 @@ router.post('/submitFormData', validateUserId, async (req, res) => {
 });
 
 // 400, general error
-router.get('/getTimeline', validateUserId, async (req, res) => {
+router.post('/getTimeline', validateUserId, async (req, res) => {
     try {
         res.status(200).send(await client.hGet('user_timeline', req.body.email));
     } catch(err) {
@@ -92,15 +94,13 @@ router.post('/changeTimeline', validateUserId, async (req, res) => {
             alternateChoice: req.body.alternateChoice,
         };
 
-        const result = openai.timeline(req.body, JSON.stringify(changeInfo))
+        const result = await openai.timeline(req.body, JSON.stringify(changeInfo))
 
-        res.status(200).send(result);
+        res.status(200).send(result.message.content);
     } catch(err) {
         console.log(err)
         res.status(400).send();
     }
 });
-
-
 
 module.exports = router;
